@@ -1,3 +1,4 @@
+import pages from "@/constants/pages";
 import { ClerkLoaded, ClerkLoading, SignIn } from "@clerk/nextjs";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
@@ -14,7 +15,7 @@ export default function Page() {
         </div>
         <div className="flex items-center justify-center mt-8">
           <ClerkLoaded>
-            <SignIn path="/sign-in" />
+            <SignIn path={pages.signin} />
           </ClerkLoaded>
           <ClerkLoading>
             <Loader2 className="animate-spin text-muted-foreground" />
@@ -23,12 +24,12 @@ export default function Page() {
       </div>
       <div className="h-full bg-blue-600 hidden lg:flex items-center justify-center">
         <Image
-          src="/logo-light.svg"
+          src="/logo.png"
           alt="Logo"
-          width={500}
-          height={500}
+          width={200}
+          height={120}
           priority
-          className="w-auto h-auto"
+          className="w-48 h-auto flex-shrink-0 object-contain"
         />
       </div>
     </div>

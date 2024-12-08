@@ -4,6 +4,7 @@ import { AlertTriangleIcon } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
+import pages from "@/constants/pages";
 
 const ErrorPage = ({
   error,
@@ -32,7 +33,7 @@ const ErrorPage = ({
           Try again
         </Button>
         <Button asChild variant="ghost" className="font-medium">
-          <Link href="/">Go back</Link>
+          <Link href={pages.dashboard}>Go back</Link>
         </Button>
       </div>
     </div>

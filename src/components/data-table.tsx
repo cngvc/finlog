@@ -47,22 +47,22 @@ export function DataTable<TData, TValue>({
     "You are about to perform a bulk delete.",
   );
 
-  const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+  const [sorting, $sorting] = React.useState<SortingState>([]);
+  const [columnFilters, $columnFilters] = React.useState<ColumnFiltersState>(
     [],
   );
-  const [rowSelection, setRowSelection] = React.useState({});
+  const [rowSelection, $rowSelection] = React.useState({});
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onSortingChange: setSorting,
+    onSortingChange: $sorting,
     getSortedRowModel: getSortedRowModel(),
-    onColumnFiltersChange: setColumnFilters,
+    onColumnFiltersChange: $columnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-    onRowSelectionChange: setRowSelection,
+    onRowSelectionChange: $rowSelection,
     state: {
       sorting,
       columnFilters,

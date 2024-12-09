@@ -14,17 +14,17 @@ export const useConfirm = (
   title: string,
   message: string,
 ): [() => JSX.Element, () => Promise<unknown>] => {
-  const [promise, setPromise] = useState<{
+  const [promise, $promise] = useState<{
     resolve: (value: boolean) => void;
   } | null>(null);
 
   const confirm = () =>
     new Promise((resolve, reject) => {
-      setPromise({ resolve });
+      $promise({ resolve });
     });
 
   const handleClose = () => {
-    setPromise(null);
+    $promise(null);
   };
 
   const handleConfirm = () => {

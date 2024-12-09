@@ -38,7 +38,7 @@ const app = new Hono()
       const { id } = c.req.valid("param");
 
       if (!id) {
-        return c.json({ error: "Missing id" }, 400);
+        return c.json({ error: "Missing object id" }, 400);
       }
 
       if (!auth?.userId) {

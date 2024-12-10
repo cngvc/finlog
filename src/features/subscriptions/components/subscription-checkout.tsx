@@ -1,14 +1,11 @@
-import { useGetSubscription } from "@/features/subscriptions/api/use-get-subscription";
-import { useCheckoutSubscription } from "@/features/subscriptions/api/use-checkout-subscription";
-
 import { Button } from "@/components/ui/button";
+import { useCheckoutSubscription } from "@/features/subscriptions/api/use-checkout-subscription";
+import { useGetSubscription } from "@/features/subscriptions/api/use-get-subscription";
 
-export const SubscriptionCheckout = () => {
+const SubscriptionCheckout = () => {
   const checkout = useCheckoutSubscription();
-  const {
-    data: subscription,
-    isLoading: isLoadingSubscription,
-  } = useGetSubscription();
+  const { data: subscription, isLoading: isLoadingSubscription } =
+    useGetSubscription();
 
   return (
     <Button
@@ -21,3 +18,5 @@ export const SubscriptionCheckout = () => {
     </Button>
   );
 };
+
+export default SubscriptionCheckout;

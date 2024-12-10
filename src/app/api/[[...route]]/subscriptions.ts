@@ -1,7 +1,7 @@
 import { setupLemon } from "@/lib/ls";
 import { db } from "@db/drizzle";
 import { subscriptions } from "@db/schema";
-import { clerkMiddleware, getAuth } from "@hono/clerk-auth";
+import { getAuth } from "@hono/clerk-auth";
 import { createCheckout, getSubscription } from "@lemonsqueezy/lemonsqueezy.js";
 import { createId } from "@paralleldrive/cuid2";
 import crypto from "crypto";
@@ -11,7 +11,7 @@ import { Hono } from "hono";
 setupLemon();
 
 const app = new Hono()
-  .get("/current", clerkMiddleware(), async (c) => {
+  .get("/current", async (c) => {
     const auth = getAuth(c);
 
     if (!auth?.userId) {
@@ -24,29 +24,23 @@ const app = new Hono()
 
     return c.json({ data: subscription || null });
   })
-  .post("/checkout", clerkMiddleware(), async (c) => {
+  .post("/checkout", async (c) => {
     const auth = getAuth(c);
-
     if (!auth?.userId) {
       return c.json({ error: "Unauthorized" }, 401);
     }
-
     const [existing] = await db
       .select()
       .from(subscriptions)
       .where(eq(subscriptions.userId, auth.userId));
-
     if (existing?.subscriptionId) {
       const subscription = await getSubscription(existing.subscriptionId);
       const portalUrl = subscription.data?.data.attributes.urls.customer_portal;
-
       if (!portalUrl) {
         return c.json({ error: "Internal error" }, 500);
       }
-
       return c.json({ data: portalUrl });
     }
-
     const checkout = await createCheckout(
       process.env.LEMONSQUEEZY_STORE_ID!,
       process.env.LEMONSQUEEZY_PRODUCT_ID!,
